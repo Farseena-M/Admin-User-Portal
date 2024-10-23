@@ -7,6 +7,7 @@ import { adminInstance } from '../axios_instance/AdminAxios';
 const EditUser = () => {
     const navigate = useNavigate();
     const { userId } = useParams();
+
     const [loading, setLoading] = useState(false);
     const [initialData, setInitialData] = useState(null);
 
@@ -14,7 +15,7 @@ const EditUser = () => {
         const fetchUserData = async () => {
             try {
                 const res = await adminInstance.get(`/api/user/${userId}`);
-                setInitialData(res.data);
+                setInitialData(res.data.data);
             } catch (error) {
                 console.error('Error fetching user data:', error.response ? error.response.data : error.message);
                 alert('Error fetching user data. Please try again.');
@@ -37,7 +38,9 @@ const EditUser = () => {
             email: Yup.string().email('Invalid email address').required('Email is required'),
             phone: Yup.string().required('Phone number is required'),
             location: Yup.string().required('Location is required'),
-            password: Yup.string().nullable(),
+            password: Yup.string()
+                .min(8, 'Password must be at least 8 characters')
+                .nullable(),
         }),
         enableReinitialize: true,
         onSubmit: async (values) => {
@@ -54,6 +57,18 @@ const EditUser = () => {
             }
         },
     });
+
+    useEffect(() => {
+        if (initialData) {
+            formik.setValues({
+                name: initialData.name,
+                email: initialData.email,
+                phone: initialData.phone,
+                location: initialData.location,
+                password: '',
+            });
+        }
+    }, [initialData]);
 
     if (!initialData) {
         return <div>Loading...</div>;

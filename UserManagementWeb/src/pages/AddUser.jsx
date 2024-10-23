@@ -21,7 +21,9 @@ const AddUser = () => {
             email: Yup.string().email('Invalid email address').required('Email is required'),
             phone: Yup.string().required('Phone number is required'),
             location: Yup.string().required('Location is required'),
-            password: Yup.string().required('Password is required'),
+            password: Yup.string()
+                .min(8, 'Password must be at least 8 characters')
+                .required('Password is required'),
         }),
         onSubmit: async (values) => {
             setLoading(true);
