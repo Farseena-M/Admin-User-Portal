@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { adminInstance } from '../axios_instance/AdminAxios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrash, faPlus, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 const UsersList = () => {
     const [users, setUsers] = useState([]);
@@ -39,6 +39,11 @@ const UsersList = () => {
         navigate('/adduser');
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('adminToken');
+        navigate('/');
+    };
+
     useEffect(() => {
         fetchUsers();
     }, []);
@@ -55,10 +60,17 @@ const UsersList = () => {
                 <div className="flex justify-end mb-4">
                     <button
                         onClick={handleAddUser}
-                        className="flex items-center text-white bg-cyan-600 hover:bg-cyan-800 px-4 py-2 rounded-md"
+                        className="flex items-center text-white bg-cyan-600 hover:bg-cyan-800 px-4 py-2 rounded-md mr-4"
                     >
                         <FontAwesomeIcon icon={faPlus} className="mr-2" />
                         Add User
+                    </button>
+                    <button
+                        onClick={handleLogout}
+                        className="flex items-center text-gray-600 hover:text-black transition duration-200"
+                    >
+                        <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
+                        Logout
                     </button>
                 </div>
 

@@ -16,7 +16,8 @@ const Login = () => {
         },
         validationSchema: Yup.object({
             usernameOrEmail: Yup.string().required(isAdmin ? 'Username is required' : 'Email is required'),
-            password: Yup.string().required('Password is required'),
+            password: Yup.string().min(8, 'Password must be at least 8 characters long.')
+                .required('Password is required.'),
         }),
         onSubmit: async (values) => {
             setLoading(true);
@@ -36,11 +37,14 @@ const Login = () => {
                     payload
                 );
                 const Data = res.data;
+                // console.log(Data);
+
                 if (Data.role === 'admin') {
                     localStorage.setItem('adminToken', Data.token);
                     navigate('/users');
                 } else if (Data.role === 'user') {
                     localStorage.setItem('userToken', Data.token);
+                    localStorage.setItem('userId', Data.id);
                     navigate('/profile');
                 } else {
                     throw new Error('Unknown role');

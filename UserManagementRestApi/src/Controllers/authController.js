@@ -43,7 +43,8 @@ export const userLogin = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (user && (await bcrypt.compare(password, user.password))) {
-        const token = jwt.sign({ userId: user._id, role: user.role }, process.env.USER_SECRET_STR, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id, role: user.role }, process.env.USER_SECRET_STR,
+            { expiresIn: process.env.LOGIN_EXPIRES });
         return res.status(200).json({
             message: 'User login successful',
             token,
