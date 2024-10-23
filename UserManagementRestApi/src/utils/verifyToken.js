@@ -19,7 +19,7 @@ const verifyToken = async (req, res, next) => {
     } catch (err) {
         try {
             const decoded = jwt.verify(token, process.env.USER_SECRET_STR);
-            const user = await User.findById(decoded.id);
+            const user = await User.findById(decoded.userId);
 
             if (!user) {
                 return res.status(401).json({ message: 'Unauthorized: User not found' });
@@ -41,5 +41,6 @@ const restrict = (roles) => {
         next();
     };
 };
+
 
 export { verifyToken, restrict }; 
