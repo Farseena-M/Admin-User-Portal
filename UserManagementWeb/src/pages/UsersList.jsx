@@ -53,10 +53,9 @@ const UsersList = () => {
     }
 
     return (
-        <div className="bg-cyan-900 min-h-screen p-8">
+        <div className="bg-cyan-900 min-h-screen p-4 md:p-8">
             <div className="bg-white rounded-lg shadow-lg p-6">
-                <h2 className="text-2xl font-bold text-center text-cyan-700 mb-4">Users List</h2>
-
+                <h2 className="text-2xl md:text-3xl font-bold text-center text-cyan-700 mb-4">Users List</h2>
                 <div className="flex justify-end mb-4">
                     <button
                         onClick={handleAddUser}
@@ -73,43 +72,44 @@ const UsersList = () => {
                         Logout
                     </button>
                 </div>
-
-                <table className="min-w-full border-collapse">
-                    <thead>
-                        <tr className="bg-cyan-600 text-white">
-                            <th className="py-2 px-4">Name</th>
-                            <th className="py-2 px-4">Email</th>
-                            <th className="py-2 px-4">Phone</th>
-                            <th className="py-2 px-4">Location</th>
-                            <th className="py-2 px-4">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map(user => (
-                            <tr key={user._id} className="border-b hover:bg-gray-100">
-                                <td className="py-2 px-4">{user.name}</td>
-                                <td className="py-2 px-4">{user.email}</td>
-                                <td className="py-2 px-4">{user.phone}</td>
-                                <td className="py-2 px-4">{user.location}</td>
-                                <td className="py-2 px-4 flex justify-center">
-                                    <button
-                                        onClick={() => handleEdit(user._id)}
-                                        className="text-cyan-600 hover:text-cyan-800 mr-4"
-                                    >
-                                        <FontAwesomeIcon icon={faEdit} />
-                                    </button>
-                                    <button
-                                        onClick={() => handleDelete(user._id)}
-                                        className="text-red-600 hover:text-red-800"
-                                    >
-                                        <FontAwesomeIcon icon={faTrash} />
-                                    </button>
-                                </td>
+                <div className="overflow-x-auto">
+                    <table className="min-w-full border-collapse">
+                        <thead>
+                            <tr className="bg-cyan-600 text-white">
+                                <th className="py-2 px-4">Name</th>
+                                <th className="py-2 px-4">Email</th>
+                                <th className="py-2 px-4">Phone</th>
+                                <th className="py-2 px-4">Location</th>
+                                <th className="py-2 px-4">Actions</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-                {users.length === 0 && <p className="text-center text-gray-500 mt-4">No users found.</p>}
+                        </thead>
+                        <tbody>
+                            {users.map(user => (
+                                <tr key={user._id} className="border-b hover:bg-gray-100">
+                                    <td className="py-2 px-4">{user.name}</td>
+                                    <td className="py-2 px-4">{user.email}</td>
+                                    <td className="py-2 px-4">{user.phone}</td>
+                                    <td className="py-2 px-4">{user.location}</td>
+                                    <td className="py-2 px-4 flex justify-center">
+                                        <button
+                                            onClick={() => handleEdit(user._id)}
+                                            className="text-cyan-600 hover:text-cyan-800 mr-4"
+                                        >
+                                            <FontAwesomeIcon icon={faEdit} />
+                                        </button>
+                                        <button
+                                            onClick={() => handleDelete(user._id)}
+                                            className="text-red-600 hover:text-red-800"
+                                        >
+                                            <FontAwesomeIcon icon={faTrash} />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    {users.length === 0 && <p className="text-center text-gray-500 mt-4">No users found.</p>}
+                </div>
             </div>
         </div>
     );
